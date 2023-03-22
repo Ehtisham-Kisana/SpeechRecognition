@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Audio } from "expo-av";
 import { MaterialIcons } from "@expo/vector-icons";
 
-export default function AudioScreen() {
+export default function AudioScreen({navigation}) {
   const [recording, setRecording] = React.useState();
   const [recordings, setRecordings] = React.useState([]);
   const [message, setMessage] = React.useState("");
@@ -86,7 +86,7 @@ export default function AudioScreen() {
             />
           </TouchableOpacity>
           <TouchableOpacity style={styles.button1}>
-            <Text style={styles.btnText}>Detect</Text>
+            <Text style={styles.btnText} onPress={()=>{navigation.navigate('Result')}}>Detect</Text>
           </TouchableOpacity>
         </View>
       );
@@ -104,7 +104,7 @@ export default function AudioScreen() {
        <Text style={styles.btnText1}>Select File</Text>
        <MaterialIcons name="attach-file" size={34} color="white" />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button1}>
+      <TouchableOpacity style={styles.button1} onPress={()=>{navigation.navigate('Result')}}>
             <Text style={styles.btnText}>Detect</Text>
           </TouchableOpacity>
 

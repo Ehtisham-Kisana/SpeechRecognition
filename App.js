@@ -1,16 +1,20 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import AudioScreen from './components/AudioScreen'
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import AudioScreen from './components/AudioScreen';
+import Result from './components/Result';
 
-const App = () => {
+const Stack = createNativeStackNavigator();
+
+function App() {
   return (
-   
-      <AudioScreen />
-   
-  )
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={AudioScreen} />
+        <Stack.Screen name="Result" component={Result} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 }
 
-export default App
-
-const styles = StyleSheet.create({})
-
+export default App;
