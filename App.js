@@ -9,7 +9,8 @@ export default function App() {
   const [recording, setRecording] = React.useState();
   const [recordings, setRecordings] = React.useState([]);
   const [message, setMessage] = React.useState("");
-
+  const [PlayIcon, setPlayIcon] = React.useState(true);
+  
   async function startRecording() {
     try {
       const permission = await Audio.requestPermissionsAsync();
@@ -55,31 +56,39 @@ export default function App() {
     const secondsDisplay = seconds < 10 ? `0${seconds}` : seconds;
     return `${minutesDisplay}:${secondsDisplay}`;
   }
+ 
+
+
+
 
   function getRecordingLines() {
-    return recordings.map((recordingLine, index) => {
+    return recordings.map((recordingLine,index) => {
       return (
         <View key={index} style={styles.row}>
           <Text style={styles.fill}>
-            Recording {index + 1} - {recordingLine.duration}
+            Recording {index} - {recordingLine.duration}
           </Text>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => recordingLine.sound.replayAsync()}
-          
+            onPress={() => {
+              setPlayIcon(!PlayIcon);
+              if(PlayIcon){
+                recordingLine.sound.replayAsync();
+                
+              }
+              else{
+                recordingLine.sound.pauseAsync();
+              }
+            }}
           >
             <MaterialIcons
-              name={recording ? "pause" : "play-arrow"}
+              name={PlayIcon ? "play-arrow" : "pause"}
               size={34}
-              color={recording ? "black" : "black"}
+              color={PlayIcon ? "black" : "black"}
               
             />
           </TouchableOpacity>
-          <Button
-            style={styles.button}
-            onPress={() => recordingLine.sound.replayAsync()}
-            title="Play"
-          ></Button>
+          
           <Button
             style={styles.button}
             onPress={() => Sharing.shareAsync(recordingLine.file)}
@@ -87,7 +96,8 @@ export default function App() {
           ></Button>
         </View>
       );
-    });
+    }
+);
   }
 
   return (
@@ -104,7 +114,7 @@ export default function App() {
         />
       </TouchableOpacity>
 
-      {getRecordingLines()}
+      {getRecordingLines(recordings.length-1)}
       <StatusBar style="auto" />
     </View>
   );
