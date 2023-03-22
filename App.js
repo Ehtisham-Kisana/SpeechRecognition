@@ -1,15 +1,14 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { Button, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { Audio } from 'expo-av';
-import * as Sharing from 'expo-sharing';
-import { MaterialIcons } from '@expo/vector-icons';
+import { StatusBar } from "expo-status-bar";
+import React from "react";
+import { Button, StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { Audio } from "expo-av";
+import * as Sharing from "expo-sharing";
+import { MaterialIcons } from "@expo/vector-icons";
 
 export default function App() {
   const [recording, setRecording] = React.useState();
   const [recordings, setRecordings] = React.useState([]);
   const [message, setMessage] = React.useState("");
-
 
   async function startRecording() {
     try {
@@ -18,9 +17,9 @@ export default function App() {
       if (permission.status === "granted") {
         await Audio.setAudioModeAsync({
           allowsRecordingIOS: true,
-          playsInSilentModeIOS: true
+          playsInSilentModeIOS: true,
         });
-        
+
         const { recording } = await Audio.Recording.createAsync(
           Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY
         );
@@ -30,7 +29,7 @@ export default function App() {
         setMessage("Please grant permission to app to access microphone");
       }
     } catch (err) {
-      console.error('Failed to start recording', err);
+      console.error("Failed to start recording", err);
     }
   }
 
@@ -43,7 +42,7 @@ export default function App() {
     updatedRecordings.push({
       sound: sound,
       duration: getDurationFormatted(status.durationMillis),
-      file: recording.getURI()
+      file: recording.getURI(),
     });
 
     setRecordings(updatedRecordings);
@@ -61,9 +60,31 @@ export default function App() {
     return recordings.map((recordingLine, index) => {
       return (
         <View key={index} style={styles.row}>
-          <Text style={styles.fill}>Recording {index + 1} - {recordingLine.duration}</Text>
-          <Button style={styles.button} onPress={() => recordingLine.sound.replayAsync()} title="Play"></Button>
-          <Button style={styles.button} onPress={() => Sharing.shareAsync(recordingLine.file)} title="Share"></Button>
+          <Text style={styles.fill}>
+            Recording {index + 1} - {recordingLine.duration}
+          </Text>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => recordingLine.sound.replayAsync()}
+          
+          >
+            <MaterialIcons
+              name={recording ? "pause" : "play-arrow"}
+              size={34}
+              color={recording ? "black" : "black"}
+              
+            />
+          </TouchableOpacity>
+          <Button
+            style={styles.button}
+            onPress={() => recordingLine.sound.replayAsync()}
+            title="Play"
+          ></Button>
+          <Button
+            style={styles.button}
+            onPress={() => Sharing.shareAsync(recordingLine.file)}
+            title="Share"
+          ></Button>
         </View>
       );
     });
@@ -72,13 +93,19 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text>{message}</Text>
-      <TouchableOpacity style={styles.VoiceIcon} onPress={recording ? stopRecording : startRecording} >
-  
-      <MaterialIcons name="keyboard-voice" size={recording ? 75  :44 } color={recording ? "black"  :"white" } />
+      <TouchableOpacity
+        style={styles.VoiceIcon}
+        onPress={recording ? stopRecording : startRecording}
+      >
+        <MaterialIcons
+          name={recording ? "record-voice-over" : "keyboard-voice"}
+          size={recording ? 75 : 44}
+          color={recording ? "black" : "black"}
+        />
       </TouchableOpacity>
+
       {getRecordingLines()}
       <StatusBar style="auto" />
-     
     </View>
   );
 }
@@ -86,29 +113,28 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
   },
   fill: {
     flex: 1,
-    margin: 16
+    margin: 16,
   },
   button: {
-    margin: 16
+    margin: 16,
   },
- VoiceIcon:{
-  margin:16,
-  borderColor:'black',
-  borderWidth:3,
-  borderRadius:60,
-  padding:10,
-
- }
+  VoiceIcon: {
+    margin: 16,
+    borderColor: "black",
+    borderWidth: 3,
+    borderRadius: 60,
+    padding: 10,
+  },
 });
