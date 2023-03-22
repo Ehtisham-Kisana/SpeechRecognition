@@ -162,7 +162,14 @@ export default function AudioScreen({ navigation }) {
               borderWidth: 3,
             }}
           >
-            <Text style={{ fontWeight: "bold", fontSize: 20, width: "53%",padding:10 }}>
+            <Text
+              style={{
+                fontWeight: "bold",
+                fontSize: 20,
+                width: "53%",
+                padding: 10,
+              }}
+            >
               Audio
             </Text>
             <TouchableOpacity
