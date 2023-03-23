@@ -10,7 +10,7 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={AudioScreen} />
+        <Stack.Screen name="Speech Emotion Recognition" component={AudioScreen} />
         <Stack.Screen name="Result" component={Result} />
       </Stack.Navigator>
     </NavigationContainer>
