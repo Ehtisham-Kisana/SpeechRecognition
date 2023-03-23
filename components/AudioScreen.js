@@ -96,7 +96,7 @@ export default function AudioScreen({ navigation }) {
     return recordings.map((recordingLine, index) => {
       return (
         <View key={index} style={styles.row}>
-          <View style={{ flexDirection: "column", padding: 3 }}>
+          <View style={{ flexDirection: "column", padding: 3,width:'53%' }}>
             <Text style={{ fontWeight: "bold", fontSize: 18, width: "63%" }}>
               Recording {index}.00 - {recordingLine.duration}
             </Text>
@@ -140,7 +140,7 @@ export default function AudioScreen({ navigation }) {
         <TouchableOpacity
           style={[
             styles.VoiceIcon2,
-            { backgroundColor: audio ? "#5f9ea0" : "green" },
+            { backgroundColor: audio ? "#191970" : "purple" },
           ]}
           onPress={pickAudio}
         >
@@ -158,7 +158,7 @@ export default function AudioScreen({ navigation }) {
               flexDirection: "row",
               justifyContent: "center",
               alignItems: "center",
-              borderColor: "grey",
+              borderColor: "black",
               borderRadius: 9,
               borderWidth: 3,
             }}
@@ -202,6 +202,9 @@ export default function AudioScreen({ navigation }) {
           </View>
         )}
       </View>
+      <View style={styles.container1}>
+        <Text style={{fontSize:37,color:'white'}}> or </Text>
+      </View>
 
       <View style={styles.container}>
         <Text>{message}</Text>
@@ -215,6 +218,7 @@ export default function AudioScreen({ navigation }) {
             color={recording ? "black" : "black"}
           />
         </TouchableOpacity>
+        <Text style={{color:'white', fontWeight:'bold', fontSize:22, marginBottom:7,}}>{recording? 'Recording..': 'Tap to Speak'}</Text>
 
         {getRecordingLines()}
         <StatusBar style="auto" />
@@ -226,16 +230,20 @@ export default function AudioScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "darkcyan",
     alignItems: "center",
     justifyContent: "center",
   },
-
+  container1: {
+    backgroundColor: "darkcyan",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   row: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    borderColor: "grey",
+    borderColor: "black",
     borderRadius: 9,
     borderWidth: 3,
   },
@@ -249,7 +257,7 @@ const styles = StyleSheet.create({
   button1: {
     padding: 10,
     margin: 10,
-    backgroundColor: "blue",
+    backgroundColor: "#000080",
     borderRadius: 8,
   },
   btnText1: {
